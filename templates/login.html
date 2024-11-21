@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+      * {
+        font-family: "Inter", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+    </style>
+</head>
+<body class="bg-blue-600 flex justify-center items-center min-h-screen">
+  <div class="bg-white max-w-lg rounded-xl p-6">
+    <h2 class="font-bold border-b pb-5 text-lg text-center">Login</h2>
+    <form action="/login" method="POST" class="py-4">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-col">
+        <label for="username" class="text-base">Username</label>
+        <input class="border rounded-md py-2 px-4" type="text" id="username" name="username" required>
+      </div>
+      <div class="flex flex-col">
+        <label for="password" class="text-base">Password</label>
+        <input class="border rounded-md py-2 px-4" type="text" id="password" name="password" required>
+      </div>
+    </div>
+      <!-- <div class="py-2">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Lihat password</label>
+      </div> -->
+      <button type="submit" class="w-full py-2 px-4 my-3 bg-blue-600 text-white rounded-md">Login</button>
+      <p class="text-center py-3">Kembali ke <a class="text-blue-600 underline" href="/">Home</a></p>
+    </form>
+  </div>
+</body>
+</html>

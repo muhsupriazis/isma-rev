@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        * {
+          font-family: "Inter", sans-serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen">
+    <header class="py-7 border-b px-10 flex justify-between">
+      <div>
+        <h 1 class="font-semibold underline hidden md:block"><a href="/dashboard">Dashboard</a></h>
+        </div>
+        <a href="/logout" class="py-2 px-4 bg-blue-600 text-white rounded-md">Keluar</a>
+    </header>
+    <main class="flex flex-col p-4 justify-between">
+      <form class="max-w-3xl m-auto" action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data">
+        <div>
+          <input class="rounded-md" type="file" id="file" name="file" required>
+        </div>
+        <button type="submit" class="bg-blue-500 py-2 px-4 w-full rounded-md my-4" >Prediksi</button>
+        <img id="preview" class="m-auto md:max-w-lg rounded-md" style="display: none" alt="">
+      </form>
+    </main>
+    <footer class="py-7 border-t px-10">
+        <p>&copy; Copyright 2024</p>
+    </footer>
+    <script>
+      const fileInput = document.getElementById('file');
+      const preview = document.getElementById('preview');
+
+      fileInput.addEventListener('change', function() {
+          const file = fileInput.files[0];
+
+          if (file) {
+              const reader = new FileReader();
+
+              reader.onload = function(e) {
+                  preview.src = e.target.result; // Set src gambar
+                  preview.style.display = 'block'; // Tampilkan gambar
+              }
+
+              reader.readAsDataURL(file); // Membaca file sebagai URL data
+          } else {
+              preview.style.display = 'none'; // Sembunyikan gambar jika tidak ada file
+          }
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="pdf.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        * {
+          font-family: "Inter", sans-serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen">
+  <header class="py-7 border-b px-4 md:px-10 flex justify-end">
+    <a href="/logout" class="hidden md:inline-block py-2 px-4 bg-blue-600 text-white rounded-md">Logout</a>
+    <a href="/logout" class="md:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+    </a>
+</header>
+    <main class="flex flex-col p-4 justify-between">
+      <div class="max-w-3xl m-auto">
+        <div class="space-y-2 mb-4">
+          <a href="/dashboard"class="inline-block text-center bg-blue-500 py-2 px-4 w-full rounded-md text-white" >Dashboard</a>
+          <button type="submit" id="download" class="bg-blue-500 py-2 px-4 w-full rounded-md text-white" >Unduh Hasil</button>
+        </div>
+        <h1 class="text-center text-xl my-4">Hasil Klasifikasi</h1>
+        <div class="space-y-3">
+          <div>
+            <p class="font-semibold">Kode:</p>
+            <p>GBR-{{ kode_random }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Tanggal Uji:</p>
+            <p>{{ tanggal_sekarang }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Grade:</p>
+            <p>{{ label }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Ekstraksi:</p>
+            <div>
+              <table>
+                <!-- <tr>
+                    <th>Fitur</th>
+                    <th>Nilai</th>
+                </tr> -->
+                <tr>
+                    <td>Contrast</td>
+                    <td>: {{ features[0] }}</td>
+                </tr>
+                <tr>
+                    <td>Dissimilarity</td>
+                    <td>: {{ features[1] }}</td>
+                </tr>
+                <tr>
+                    <td>Homogeneity</td>
+                    <td>: {{ features[2] }}</td>
+                </tr>
+                <tr>
+                    <td>Energy</td>
+                    <td>: {{ features[3] }}</td>
+                </tr>
+                <tr>
+                    <td>Correlation</td>
+                    <td>: {{ features[4] }}</td>
+                </tr>
+            </table>
+            </div>
+          </div>
+          <div>
+            <p class="font-semibold">Gambar:</p>
+            <img src="{{ url_for('static', filename='uploads/' ~ image_file) }}" alt="Uploaded Image" class="md:max-w-[600] m-auto rounded-md">
+          </div>
+        </div>
+        <div class="hidden">
+        <div id="invoice" class="p-5 rounded-md">
+          {% if label %}
+          <h2 class="text-xl font-semibold text-center mb-4">HASIL UJI</h2>
+          <table>
+            <tr>
+              <td class="text-center border border-black text-sm w-[10%]">Kode</td>
+              <td class="text-center border border-black text-sm w-[40%]">Gambar</td>
+              <td class="text-center border border-black text-sm w-[25%]">Tanggal Uji</td>
+              <td class="text-center border border-black text-sm w-[25%]">Grade</td>
+            </tr>
+            <tr>
+              <td class="border border-black text-center text-sm">GBR-{{ kode_random }}</td>
+              <td class="border border-black text-center text-sm"><img src="{{ url_for('static', filename='uploads/' ~ image_file) }}" alt="Uploaded Image" style="max-width: 300px; max-height: 400px; margin: auto;"></td>
+              <td class="border border-black text-center text-sm">{{ tanggal_sekarang }}</td>
+              <td class="border border-black text-center text-sm">{{ label }}</td>
+            </tr>
+          </table>
+          {% endif %}
+        </div>
+        </div>
+      </div>
+    </div>
+    </main>
+    <footer class="py-7 border-t px-10">
+        <p>&copy; Copyright 2024</p>
+    </footer>
+    <script>
+      window.onload = function () {
+    document.getElementById("download")
+        .addEventListener("click", () => {
+            const invoice = this.document.getElementById("invoice");
+            console.log(invoice);
+            console.log(window);
+            var opt = {
+                margin: 1,
+                filename: 'myfile.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(invoice).set(opt).save();
+        })
+}
+    </script>
+    <!-- <script>
+      const fileInput = document.getElementById('file');
+      const preview = document.getElementById('preview');
+
+      fileInput.addEventListener('change', function() {
+          const file = fileInput.files[0];
+
+          if (file) {
+              const reader = new FileReader();
+
+              reader.onload = function(e) {
+                  preview.src = e.target.result; // Set src gambar
+                  preview.style.display = 'block'; // Tampilkan gambar
+              }
+
+              reader.readAsDataURL(file); // Membaca file sebagai URL data
+          } else {
+              preview.style.display = 'none'; // Sembunyikan gambar jika tidak ada file
+          }
+      });
+  </script> -->
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        * {
+          font-family: "Inter", sans-serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen">
+  <header class="py-7 border-b px-4 md:px-10 flex justify-between">
+    <div class="flex space-x-6">
+      <h 1 class="font-semibold underline hidden md:block"><a href="/dashboard">Dashboard</a></h>
+      <a href="/dashboard" class="md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      </a>
+      <nav class="flex space-x-3">
+        <a href="/dashboard/train" class="underline hidden md:inline-block">Data Latih</a>
+        <a href="/dashboard/train" class="md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+        </a>
+      </nav>
+    </div>
+    <a href="/logout" class="hidden md:inline-block py-2 px-4 bg-blue-600 text-white rounded-md">Logout</a>
+    <a href="/logout" class="md:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+    </a>
+</header>
+    <main class="flex flex-col p-4 justify-between max-w-4xl m-auto">
+    <h1 class="font-semibold py-4 text-center text-xl">Tambah Data Latih</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="p-4 border rounded-md">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="/dashboard/train/upload" method="post" enctype="multipart/form-data">
+      <div class="">
+        <div>
+          <label for="quality" class="font-semibold">Pilih Kualitas:</label><br>
+          <input type="radio" id="iya" name="quality" value="iya" required>
+          <label for="berkualitas">Berkualitas</label><br>
+          <input type="radio" id="tidak" name="quality" value="tidak">
+          <label for="tidak_berkualitas">Tidak Berkualitas</label><br><br>
+        </div>
+        <div>
+          <label for="quality" class="font-semibold">Pilih Gambar:</label><br>
+          <input class="rounded-md" type="file" id="file" name="file" required>
+          <button class="bg-blue-500 text-white py-2 px-4 w-full rounded-md my-4" type="submit">Upload</button>
+        </div>
+      </div>
+    </form>
+    <nav>
+      <a href="/dashboard/data" class="inline-block text-center bg-blue-500 py-2 px-4 w-full rounded-md text-white">Lihat data latih</a>
+    </nav>
+  </main>
+  <footer class="py-7 border-t px-10">
+      <p>&copy; Copyright 2024</p>
+  </footer>
+  <script>
+    const fileInput = document.getElementById('file');
+    const preview = document.getElementById('preview');
+
+    fileInput.addEventListener('change', function() {
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result; // Set src gambar
+                preview.style.display = 'block'; // Tampilkan gambar
+            }
+
+            reader.readAsDataURL(file); // Membaca file sebagai URL data
+        } else {
+            preview.style.display = 'none'; // Sembunyikan gambar jika tidak ada file
+        }
+    });
+</script>
+</body>
+</html>
+

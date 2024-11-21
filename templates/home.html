@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        * {
+          font-family: "Inter", sans-serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
+      </style>
+</head>
+<body class="flex flex-col justify-between min-h-screen">
+    <header class="py-7 border-b px-10 flex justify-between">
+        <h1 class="font-semibold">Home</h1>
+        <a href="/login" class="py-2 px-4 bg-blue-600 text-white rounded-md">Login</a>
+    </header>
+    <main class="flex justify-between">
+        <section class="py-10 px-10 max-w-[700px]">
+            <h2 class="text-2xl font-bold">Klasifikasi Tiram</h2>
+            <p class="py-5">Selamat datang! Anda dapat mempelajari perbedaan antara tiram segar berkualitas tinggi dan tiram yang sudah tidak layak konsumsi melalui visual yang jelas dan informatif. Kami hadir untuk membantu Anda membuat keputusan yang tepat saat memilih tiram terbaik, baik untuk hidangan di rumah maupun di restoran. Pastikan kesehatan dan kualitas dalam setiap pilihan Anda!</p>
+            <p>Klik tombol dibawah untuk masuk!</p>
+            <a href="/login" class="py-2 px-4 bg-blue-600 text-white rounded-md mt-7 inline-block">Masukan ke dashboard!</a>
+        </section>
+        <section class="hidden md:block" >
+            <img src="{{ url_for('static', filename='images/keram.png') }}" alt="">
+        </section>
+    </main>
+    <footer class="py-7 border-t px-10">
+        <p>&copy; Copyright 2024</p>
+    </footer>
+</body>
+</html>
