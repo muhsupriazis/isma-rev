@@ -3,7 +3,8 @@ import cv2
 import os
 import numpy as np
 import joblib
-from skimage.feature import graycomatrix, graycoprops
+# from skimage.feature import graycomatrix, greycoprops
+from skimage.feature import greycomatrix, greycoprops
 from datetime import datetime
 import random
 from werkzeug.utils import secure_filename
@@ -37,12 +38,12 @@ def extract_glcm_features(image):
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     distances = [1]
     angles = [0, np.pi/4, np.pi/2, 3*np.pi/4]
-    glcm = graycomatrix(gray_image, distances, angles, 256, symmetric=True, normed=True)
-    contrast = graycoprops(glcm, 'contrast').flatten()
-    dissimilarity = graycoprops(glcm, 'dissimilarity').flatten()
-    homogeneity = graycoprops(glcm, 'homogeneity').flatten()
-    energy = graycoprops(glcm, 'energy').flatten()
-    correlation = graycoprops(glcm, 'correlation').flatten()
+    glcm = greycomatrix(gray_image, distances, angles, 256, symmetric=True, normed=True)
+    contrast = greycoprops(glcm, 'contrast').flatten()
+    dissimilarity = greycoprops(glcm, 'dissimilarity').flatten()
+    homogeneity = greycoprops(glcm, 'homogeneity').flatten()
+    energy = greycoprops(glcm, 'energy').flatten()
+    correlation = greycoprops(glcm, 'correlation').flatten()
     return np.hstack([contrast, dissimilarity, homogeneity, energy, correlation])
 
 # Rute untuk halaman utama
