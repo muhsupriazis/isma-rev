@@ -215,7 +215,5 @@ if __name__ == '__main__':
     # Membuat folder jika belum ada
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run()
-# # Jalankan aplikasi Flask
-# if __name__ == '__main__':
-#     app.run(debug=True)
+    port = int(os.getenv("PORT", 4000))  # Default port 5000 jika FLASK_RUN_PORT tidak diatur
+    app.run(host='0.0.0.0', port=port)
