@@ -215,7 +215,7 @@ if __name__ == '__main__':
     # Membuat folder jika belum ada
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(debug=True)
+    app.run()
 # # Jalankan aplikasi Flask
 # if __name__ == '__main__':
 #     app.run(debug=True)
